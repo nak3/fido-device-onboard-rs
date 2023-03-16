@@ -75,7 +75,8 @@ jobs:
       - name: Install deps
         run: |
           dnf install -y make gcc openssl openssl-devel findutils golang git tpm2-tss-devel clevis cryptsetup-devel clang-devel \
-              gcc-aarch64-linux-gnu openssl-devel perl
+              gcc-aarch64-linux-gnu openssl1.1-devel perl
+              #gcc-aarch64-linux-gnu openssl-devel perl
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
