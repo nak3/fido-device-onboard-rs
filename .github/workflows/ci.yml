@@ -87,6 +87,14 @@ jobs:
           args: -- -D warnings -D clippy::panic -D clippy::todo
 
   build_and_test:
+    strategy:
+      matrix:
+        arch:
+          - x86_64-unknown-linux-gnu
+          - aarch64-unknown-linux-gnu
+          - armv7-unknown-linux-gnueabi
+          - riscv64gc-unknown-linux-gnu
+
     runs-on: ubuntu-latest
     container: fedora:latest
     steps:
@@ -110,14 +118,19 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - name: Build
         uses: actions-rs/cargo@v1
+        env:
+          TARGET_CC: ${{matrix.arch}}
         with:
           command: build
+          args: --verbose --target ${{matrix.arch}}
       - name: Run tests
         uses: actions-rs/cargo@v1
         env:
           FDO_PRIVILEGED: true
+          TARGET_CC: ${{matrix.arch}}
         with:
           command: test
+          args: --verbose --target ${{matrix.arch}}
       - name: Check aio
         run: |
           mkdir aio-dir/
