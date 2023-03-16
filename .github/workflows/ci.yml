@@ -114,6 +114,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
+          targets: ${{matrix.arch}}
       - name: Build
         run: TARGET_CC=${{matrix.arch}} cargo build --target ${{matrix.arch}}
       - name: Run tests
