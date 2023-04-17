@@ -242,6 +242,17 @@ async fn test_plain_di() -> Result<()> {
     let dc_path = client_result.client_path().join("devicecredential.dc");
     L.l(format!("Device Credential should be in {:?}", dc_path));
 
+    let owner_output = ctx
+        .run_owner_tool(
+            client_result.client_path(),
+            &["dump-device-credential", dc_path.clone().to_str().unwrap()],
+        )
+        .context("Error running dump-device-credential")?;
+
+    // Print credential debug.
+    bail!("device_credential: {:?}", owner_output);
+
+    /*
     let client_result = ctx
         .run_client(
             Binary::ManufacturingClient,
@@ -261,6 +272,7 @@ async fn test_plain_di() -> Result<()> {
         .expect_success()
         .context("Manufacturing client failed")?;
     client_result.expect_stderr_line("Device credential already active")?;
+    */
 
-    Ok(())
+    //Ok(())
 }

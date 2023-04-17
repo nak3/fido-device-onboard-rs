@@ -800,8 +800,10 @@ impl KeyReference {
                     pubkey_hash: manufacturer_public_key_hash,
 
                     key_storage: KeyStorage::Plain {
-                        hmac_secret: hmac_key,
-                        private_key,
+                        hmac_secret: vec![],
+                        private_key: vec![],
+          //              hmac_secret: hmac_key,
+          //              private_key,
                     },
                 };
 

@@ -512,9 +512,9 @@ fn dump_devcred(args: &DumpDeviceCredentialArguments) -> Result<(), Error> {
     println!("Public key hash: {}", dc.pubkey_hash);
     println!("HMAC and signing key:");
     match dc.key_storage {
-        fdo_data_formats::devicecredential::file::KeyStorage::Plain { .. } => {
-            println!("\tHMAC key: <secret>");
-            println!("\tSigning key: <secret>");
+        fdo_data_formats::devicecredential::file::KeyStorage::Plain { hmac_secret, private_key } => {
+            println!("\tHMAC key: {:?}", hmac_secret);
+            println!("\tSigning key: {:?}", private_key);
         }
         fdo_data_formats::devicecredential::file::KeyStorage::Tpm {
             signing_public,
